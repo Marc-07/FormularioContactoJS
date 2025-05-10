@@ -9,12 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
     //fn Validateinputs
     const validateInputs = ((e) => {
-        console.log(e.target.parentElement);
         if(e.target.value.trim() === ""){
-            showalert(` ${e.target.id} field is required`, e.target.parentElement);
-        }else {
-            console.log("Si hay algo")
+            showalert(`${e.target.id} field is required`, e.target.parentElement);
+            return;
         }
+        if(e.target.id === "email" && !validateEmail(e.target.value)) {
+            showalert("Invalid email address", e.target.parentElement)
+            return;
+        };
+        cleanAlert(e.target.parentElement);
     })
    
     //Events
@@ -23,14 +26,30 @@ document.addEventListener("DOMContentLoaded", () => {
     inputSubject.addEventListener("blur", validateInputs);
     inputMessage.addEventListener("blur", validateInputs);
 
-    const showalert = ((message, referencia) => {
+    const showalert = ((message, reference) => {
+        cleanAlert(reference);
+
         //Alert on Html
         const error = document.createElement("P");
         error.textContent = message;
         error.classList.add("error-message");
         
         //Inject the error into the form
-        referencia.appendChild(error);
+        reference.appendChild(error);
 
+    })
+
+    const cleanAlert  = ((reference) => {
+        // check if an alert already exists
+        const alerta = reference.querySelector(".error-message");
+        if(alerta) {
+            alerta.remove();
+        }
+    });
+
+    const validateEmail = ((email) => {
+        const regex =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+        const result = regex.test(email);
+        return result;
     })
 })
