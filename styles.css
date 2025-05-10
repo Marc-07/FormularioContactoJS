@@ -95,9 +95,6 @@
     color: #a0aec0;
   }
   
-  .input-with-icon {
-    padding-left: 46px !important;
-  }
 
   button {
     display: inline-block;
@@ -128,10 +125,18 @@
   }
   
   .error-message {
-    color: #ef4444;
+    background-color: red;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff;
     font-size: 14px;
     margin-top: 5px;
-    display: none;
+    display: block;
+    
+  }
+  p::first-letter {
+    text-transform: uppercase;
   }
   
   .is-invalid + .error-message {
